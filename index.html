@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>about happyvalley</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --card-radius: 16px;
+            --section-padding: 80px 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* 头部区域 */
+        .hero {
+            padding: 150px 0 80px;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(67, 97, 238, 0.05) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+        
+        .hero-content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: var(--shadow);
+        }
+        
+        .hero-text {
+            flex: 1.5;
+        }
+        
+        .greeting {
+            margin-bottom: 20px;
+        }
+        
+        .greeting.en {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .greeting.cn {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .greeting.cn .prefix {
+            color: var(--gray);
+        }
+        
+        .greeting.cn .name {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .greeting.cn .face {
+            color: var(--accent);
+            margin-left: 10px;
+        }
+        
+        .labels-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .label:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .label i {
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        .label .title {
+            font-weight: 600;
+        }
+        
+        .label .content {
+            color: var(--gray);
+            margin-left: 5px;
+        }
+        
+        .label .link {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        /* 内容区域 */
+        section {
+            padding: var(--section-padding);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--light-gray);
+            color: var(--gray);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0 5px;
+        }
+        
+        .tag i {
+            margin-right: 5px;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+        
+        .content-section p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .content-section a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .content-section a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+        
+        .content-section del {
+            color: var(--gray);
+        }
+        
+        /* 链接区域 */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .identity-card {
+            background: white;
+            border-radius: var(--card-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none !important;
+        }
+        
+        .identity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .identity-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            text-decoration: none !important;
+        }
+        
+        .identity-content {
+            flex: 1;
+        }
+        
+        .identity-content .where {
+            font-weight: 600;
+            color: var(--dark);
+            display: block;
+            margin-bottom: 5px;
+            text-decoration: none !important;
+        }
+        
+        .identity-content .link {
+            color: var(--accent);
+            font-weight: 500;
+            text-decoration: none !important;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hosting {
+            display: inline-block;
+            color: #adb5bd;
+            text-decoration: none;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+        
+        .hosting:hover {
+            color: white;
+        }
+        
+        .hosting i {
+            color: #e63946;
+            margin-right: 5px;
+        }
+        
+        .hosting .link {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .copyright {
+            color: #6c757d;
+            font-size: 1rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .labels-container {
+                justify-content: center;
+            }
+            
+            .greeting.en,
+            .greeting.cn {
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 120px 0 60px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .content-section {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-image img {
+                max-width: 200px;
+            }
+            
+            .greeting.en {
+                font-size: 2rem;
+            }
+            
+            .greeting.cn {
+                font-size: 1.6rem;
+            }
+            
+            .label {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-play-circle"></i>
+                    乐谷Happyvalley
+                </a>
+                <div class="nav-links">
+                    <a href="#home">首页</a>
+                    <a href="#about">关于我</a>
+                    <a href="#links">社交链接</a>
+                    <a href="#games">游戏账号</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 头部区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-image">
+                    <img src="happyvalley-mc.png" alt="happyvalley-lmx">
+                </div>
+                <div class="hero-text">
+                    <h1 class="greeting en">
+                        Hi! It's Happyvalley here~
+                    </h1>
+                    <h1 class="greeting cn">
+                        <small class="prefix">各位小伙伴大家好，</small><span class="name no-wrap">这里是乐谷 <span class="face">(。・`ω´・)</span></span>
+                    </h1>
+                    
+                    <div class="labels-container">
+                        <a alt="home" class="label" href="http://happyvalley.video">
+                            <i aria-hidden="true" class="fa fa-map-marker"></i>
+                            <span class="title">欢乐谷视频工作室</span>
+                            <span class="link">//happyvalley.video</span>
+                        </a>
+                        
+                        <div alt="languages" class="label">
+                            <i aria-hidden="true" class="fa fa-language"></i>
+                            <span class="title">LANG</span>
+                            <span class="content">汉语 / 漢語 / English</span>
+                        </div>
+                        
+                        <div alt="education" class="label">
+                            <i aria-hidden="true" class="fa fa-university"></i>
+                            <span class="title">College</span>
+                            <span class="content">GUET</span>
+                        </div>
+                        
+                        <div alt="browser" class="label">
+                            <i aria-hidden="true" class="fa-brands fa-edge"></i>
+                            <span class="content">Edge</span>
+                        </div>
+                        
+                        <div alt="editor" class="label">
+                            <i aria-hidden="true" class="fa-solid fa-keyboard"></i>
+                            <span class="content">VSCode</span>
+                        </div>
+                        
+                        <div alt="spaces or tabs" class="label">
+                            <i aria-hidden="true" class="fa fa-i-cursor"></i>
+                            <span class="content">tabs</span>
+                        </div>
+                        
+                        <div alt="platforms" class="label">
+                            <i aria-hidden="true" class="fa-brands fa-windows"></i>
+                            <span class="content">11</span>
+                            <i aria-hidden="true" class="fa-brands fa-linux"></i>
+                            <span class="content">Ubuntu</span>
+                            <i aria-hidden="true" class="fa-brands fa-apple"></i>
+                            <span class="content">iOS / MacOS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fa fa-chevron-right"></i> happyvalley's Info
+                <span class="no-wrap">
+                    <small class="tag"><i class="fa fa-tag"></i>Videographer</small>
+                    <small class="tag"><i class="fa fa-tag"></i>Drone Pilot</small>
+                    <small class="tag"><i class="fa fa-tag"></i>DevOps</small>
+                </span>
+            </h2>
+            
+            <div class="content-section">
+                <p>
+                    \\乐谷是一位在职社畜//<br />
+                    是一名业余摄像师，目前有四年的摄像经验<br />
+                    （因为主要是拍视频而不是照片 所以是摄像师而不是摄影师XD）<br />
+                    经常进行录舞、Cosplay拍摄相关的摄像~<br />
+                    （主 Vocaloid / 世界计划 相关）<br />
+                    目前比较感兴趣空间视频、VR180等立体摄影摄像！之后也会陆续上传一些相关作品~<br />
+                    如有需要可以通过<a href="#links">下方链接</a>联系我合作~
+                </p>
+                
+                <p>
+                    Minecraft 爱好者<br />
+                    乐谷也是一位有着十年以上MC开服经验的的服主<br />
+                    目前运营着 <a href="https://bdcraft.cn">BlueDream·梦之蓝社区</a> 
+                </p>
+                
+                <p>
+                    航模爱好者，喜欢穿越机，喜欢在蓝天自由翱翔的感觉<br />
+                    有在bilibili上分享自己的穿越机记录哦~<br />
+                </p>
+                
+                <p>
+                    自2017年起被 <a href="https://gogosu.moe">猫猫</a> 拉入了音游坑，自有SDVX手台，但自从成为社畜后不怎么出勤了（<br />
+                    正在推的移动端音游：韵律源点Arcaea / PJSK(啤酒烧烤真好玩) / 旋转音律Rotaeno(方向盘咕噜咕噜)<br />
+                    正在推的非移动端音游：SDVX / maimai / jubeat / CHUNITHM<br />
+                    当然其他的许多音乐游戏也有在玩<br />
+                    “音游中文媒体计划”创始人，目前旗下开设并运营有 <a href="https://wiki.arcaea.cn">Arcaea中文维基</a> 和 <a href="https://wiki.rotaeno.cn">Rotaeno中文维基 </a><br />
+                </p>
+                
+                <p>
+                    乐谷也是一位up主，平时会上传各种各样的视频<br />
+                    视频内容多种多样，包括但不限于音乐游戏、穿越机、我的世界相关的视频<br />
+                    最近基本都是录舞的联合投稿ww<br />
+                    做视频十五年了！从爱拍到优酷土豆到现在的bilibili、抖音，经历了太多_(:3rz)_<br />
+                </p>
+                
+                <p>
+                    社央就是我的天使！最喜欢社央了！社央是世界上最可爱的！<br />
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 社交链接 -->
+    <section id="links">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fa fa-chevron-right"></i> happyvalley's Link
+                <span class="no-wrap">
+                    <small class="tag no-wrap"><i class="fa fa-tag"></i><del>Youtuber</del></small>
+                    <small class="tag no-wrap"><i class="fa fa-tag"></i><del>Photographer</del></small>
+                </span>
+            </h2>
+            
+            <div class="links-grid">
+                <a href="https://github.com/happyvalley-lmx" class="identity-card">
+                    <div class="identity-icon">
+                        <i class="fa-brands fa-github"></i>
+                    </div>
+                    <div class="identity-content">
+                        <span class="where">GitHub</span>
+                        <span class="link">@happyvalley-lmx</span>
+                    </div>
+                </a>
+                
+                <a href="https://www.douyin.com/user/MS4wLjABAAAAl_xXUqkQ81vAk0i2umScu38zWmcKgbQvoKkvj-RAES4" class="identity-card">
+                    <div class="identity-icon">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </div>
+                    <div class="identity-content">
+                        <span class="where">抖音(TikTok CN)</span>
+                        <span class="link">@乐谷happyvalley</span>
+                    </div>
+                </a>
+                
+                <a href="https://space.bilibili.com/8033176" class="identity-card">
+                    <div class="identity-icon">
+                        <i class="fa-brands fa-bilibili"></i>
+                    </div>
+                    <div class="identity-content">
+                        <span class="where">bilibili</span>
+                        <span class="link">@happyvalley_lmx</span>
+                    </div>
+                </a>
+                
+                <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1085636071&amp;site=qq&amp;menu=yes" class="identity-card">
+                    <div class="identity-icon">
+                        <i class="fa-brands fa-qq"></i>
+                    </div>
+                    <div class="identity-content">
+                        <span class="where">QQ</span>
+                        <span class="link">1085636071</span>
+                    </div>
+                </a>
+                
+                <a href="https://www.xiaohongshu.com/user/profile/61d5d94a0000000010009bd2" class="identity-card">
+                    <div class="identity-icon">
+                        <i class="fa-solid fa-book"></i>
+                    </div>
+                    <div class="identity-content">
+                        <span class="where">小红书(RedNote)</span>
+                        <span class="link">@AkariMai</span>
+                    </div>
+                </a>
+                
+                <a href="http://weibo.com/happyvalleylmx" class="identity-card">
+                    <div class="identity-icon">
+                        <i class="fa-brands fa-weibo"></i>
+                    </div>
+                    <div class="identity-content">
+                        <span class="where">weibo</span>
+                        <span class="link">@happyvalley_lmx</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 游戏账号 -->
+    <section id="games">
+        <div class="container">
+            <h2 class="section-title">
+                <i class="fa fa-chevron-right"></i> happyvalley's Game Account
+                <span class="no-wrap">
+                    <small class="tag no-wrap"><i class="fa fa-tag"></i>sandbox</small>
+                    <small class="tag no-wrap"><i class="fa fa-tag"></i>FPS</small>
+                    <small class="tag no-wrap"><i class="fa fa-tag"></i>MUG</small>
+                </span>
+            </h2>
+            
+            <div class="links-grid">
+                <a href="https://profile.unipjsk.com/#/user/5306898878803979" class="identity-card">
+                    <div class="identity-icon">
+                        <i class="fa fa-music"></i>
+                    </div>
+                    <div class="identity-content">
+                        <span class="where">Project SEKAI</span>
+                        <span class="link">AkariMai</span>
+                    </div>
+                </a>
+                
+                <a href="http://steamcommunity.com/id/happyvalley/" class="identity-card">
+                    <div class="identity-icon">
+                        <i class="fa-brands fa-steam"></i>
+                    </div>
+                    <div class="identity-content">
+                        <span class="where">Steam</span>
+                        <span class="link">乐谷happyvalley</span>
+                    </div>
+                </a>
+                
+                <a href="#" class="identity-card">
+                    <div class="identity-icon">
+                        <i class="fa-solid fa-cubes"></i>
+                    </div>
+                    <div class="identity-content">
+                        <span class="where">Minecraft</span>
+                        <span class="link">happyvalley_lmx</span>
+                    </div>
+                </a>
+                
+                <a href="https://vrchat.com/home/user/usr_5aebc3a0-256a-4457-86fe-d384541a788d" class="identity-card">
+                    <div class="identity-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <div class="identity-content">
+                        <span class="where">VRChat</span>
+                        <span class="link">樂谷happyvalley</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a class="hosting" href="https://github.com/amphineko/amphineko">
+                    <i class="fa fa-heart"></i> This is a refactoring of <span class="link">https://futa.moe/amphineko</span>, a biopage by Naoki Rinmous.
+                </a>
+                <div class="copyright">
+                    Copyright © 2017-2025 happyvalley.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // 模拟头像加载
+        document.addEventListener('DOMContentLoaded', function() {
+            const img = document.querySelector('.hero-image img');
+            if (!img.complete) {
+                img.style.opacity = 0;
+                img.addEventListener('load', function() {
+                    this.style.transition = 'opacity 0.5s ease';
+                    this.style.opacity = 1;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
