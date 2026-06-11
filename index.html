@@ -1,760 +1,978 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>about happyvalley</title>
+    <title>Happyvalley — 乐谷</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5.1.0/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/space-grotesk@5.1.0/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono@5.1.0/index.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.1.0/400.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.1.0/500.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.1.0/600.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/noto-sans-jp@5.1.0/700.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --accent: #4895ef;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-            --transition: all 0.3s ease;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --card-radius: 16px;
-            --section-padding: 80px 0;
+            --bg: #08080d;
+            --surface: rgba(255, 255, 255, 0.035);
+            --surface-2: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.2);
+            --text: #f4f4f6;
+            --text-muted: #9ca3b3;
+            --text-dim: #6b7080;
+            --accent-1: #ff3d8c;
+            --accent-2: #7c3aed;
+            --accent-3: #00d4ff;
+            --gradient: linear-gradient(135deg, #ff3d8c 0%, #7c3aed 50%, #00d4ff 100%);
+            --radius: 20px;
+            --radius-sm: 14px;
+            --ease: cubic-bezier(0.22, 1, 0.36, 1);
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+
+        [data-theme="light"] {
+            --bg: #f6f7fb;
+            --surface: rgba(255, 255, 255, 0.7);
+            --surface-2: rgba(255, 255, 255, 0.9);
+            --border: rgba(10, 10, 15, 0.08);
+            --border-hover: rgba(10, 10, 15, 0.2);
+            --text: #0a0a0f;
+            --text-muted: #4a5060;
+            --text-dim: #8a8f9c;
         }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--light);
+            font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
             overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+            transition: background 0.4s ease, color 0.4s ease;
         }
-        
+
+        html[lang^="ja"] body { font-family: 'Noto Sans JP', 'Inter', -apple-system, sans-serif; }
+
+        .aurora {
+            position: fixed; inset: 0; z-index: 0;
+            overflow: hidden; pointer-events: none;
+        }
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            will-change: transform;
+        }
+        .blob-1 {
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, var(--accent-1) 0%, transparent 70%);
+            top: -200px; left: -150px;
+            animation: float 22s ease-in-out infinite;
+        }
+        .blob-2 {
+            width: 750px; height: 750px;
+            background: radial-gradient(circle, var(--accent-2) 0%, transparent 70%);
+            bottom: -250px; right: -150px;
+            animation: float 26s ease-in-out infinite -8s;
+        }
+        .blob-3 {
+            width: 550px; height: 550px;
+            background: radial-gradient(circle, var(--accent-3) 0%, transparent 70%);
+            top: 40%; left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.3;
+            animation: float 30s ease-in-out infinite -14s;
+        }
+        [data-theme="light"] .blob { opacity: 0.3; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(80px, -60px) scale(1.1); }
+            66% { transform: translate(-50px, 50px) scale(0.95); }
+        }
+
+        body::after {
+            content: '';
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: 1;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            mix-blend-mode: overlay;
+        }
+
+        main, header, footer { position: relative; z-index: 2; }
+
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
-        
-        /* 导航栏 */
+
         header {
-            position: fixed;
-            top: 0;
+            position: fixed; top: 0;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 15px 0;
-            transition: var(--transition);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background: color-mix(in oklab, var(--bg) 70%, transparent);
+            border-bottom: 1px solid transparent;
+            z-index: 100;
+            transition: border-color 0.3s ease, padding 0.3s ease;
+            padding: 18px 0;
         }
-        
         header.scrolled {
-            padding: 10px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-bottom-color: var(--border);
+            padding: 12px 0;
         }
-        
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
+        .navbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+
         .logo {
-            font-size: 1.8rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
             font-weight: 700;
-            color: var(--primary);
+            letter-spacing: -0.02em;
+            color: var(--text);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: flex; align-items: center; gap: 10px;
+            flex-shrink: 0;
         }
-        
-        .logo i {
-            color: var(--accent);
+        .logo-mark {
+            width: 32px; height: 32px;
+            border-radius: 9px;
+            background: var(--gradient);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 0.85rem;
+            box-shadow: 0 4px 16px color-mix(in oklab, var(--accent-2) 40%, transparent);
         }
-        
-        .nav-links {
-            display: flex;
-            gap: 25px;
-        }
-        
+
+        .nav-right { display: flex; gap: 6px; align-items: center; }
+        .nav-links { display: flex; gap: 2px; align-items: center; }
         .nav-links a {
             text-decoration: none;
-            color: var(--dark);
+            color: var(--text-muted);
             font-weight: 500;
-            position: relative;
-            transition: var(--transition);
-            font-size: 1.1rem;
+            font-size: 0.9rem;
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: color 0.2s ease, background 0.2s ease;
         }
-        
-        .nav-links a:after {
+        .nav-links a:hover { color: var(--text); background: var(--surface-2); }
+
+        /* Language pill */
+        .lang-pill {
+            display: flex;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 3px;
+            margin-left: 6px;
+            backdrop-filter: blur(10px);
+        }
+        .lang-pill button {
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 11px;
+            border-radius: 100px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            transition: all 0.25s var(--ease);
+            min-width: 32px;
+        }
+        .lang-pill button:hover { color: var(--text); }
+        .lang-pill button.active {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 2px 8px color-mix(in oklab, var(--accent-2) 40%, transparent);
+        }
+
+        .theme-toggle {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s ease;
+            margin-left: 4px;
+            font-size: 0.85rem;
+        }
+        .theme-toggle:hover { border-color: var(--border-hover); background: var(--surface-2); transform: rotate(15deg); }
+
+        .hero { padding: 160px 0 80px; }
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .hero-text { animation: slideUp 0.9s var(--ease); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 14px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            backdrop-filter: blur(10px);
+        }
+        .pulse {
+            width: 8px; height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #22c55e;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        h1.title {
+            font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+            font-size: clamp(2.4rem, 6vw, 4.4rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.035em;
+            margin-bottom: 24px;
+        }
+        .accent {
+            background: var(--gradient);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-shift 8s ease infinite;
+        }
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .subtitle {
+            font-size: 1.08rem;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            max-width: 560px;
+        }
+
+        .hero-avatar {
+            position: relative;
+            width: 100%;
+            max-width: 340px;
+            margin-left: auto;
+            aspect-ratio: 1;
+            animation: slideUp 0.9s var(--ease) 0.1s backwards;
+        }
+        .hero-avatar::before {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: var(--transition);
+            inset: -30px;
+            background: var(--gradient);
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0.55;
+            animation: pulse-glow 5s ease-in-out infinite;
         }
-        
-        .nav-links a:hover:after {
-            width: 100%;
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.45; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.08); }
         }
-        
-        .nav-links a:hover {
-            color: var(--primary);
+        .hero-avatar img {
+            position: relative;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: blob-morph 14s ease-in-out infinite;
+            border: 2px solid var(--border);
         }
-        
-        /* 头部区域 */
-        .hero {
-            padding: 150px 0 80px;
-            background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+        @keyframes blob-morph {
+            0%, 100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+            25% { border-radius: 70% 30% 50% 50% / 50% 70% 30% 50%; }
+            50% { border-radius: 50% 50% 30% 70% / 70% 30% 70% 30%; }
+            75% { border-radius: 30% 70% 50% 50% / 50% 30% 70% 50%; }
+        }
+
+        .bento {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 36px;
+        }
+        .bento-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            display: flex; align-items: center; gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s var(--ease);
+            backdrop-filter: blur(10px);
+        }
+        .bento-item:hover {
+            border-color: var(--border-hover);
+            background: var(--surface-2);
+            transform: translateY(-2px);
+        }
+        .bento-item > i {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            width: 20px;
+            text-align: center;
+        }
+        .bento-item .key {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 2px;
+        }
+        .bento-item .val { font-size: 0.88rem; font-weight: 500; }
+        .bento-item.wide { grid-column: span 2; }
+
+        section { padding: 90px 0; }
+
+        .section-header { margin-bottom: 56px; }
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: var(--accent-3);
+            margin-bottom: 14px;
+            display: flex; align-items: center; gap: 10px;
+            letter-spacing: 0.05em;
+        }
+        .section-label::before {
+            content: '';
+            width: 28px; height: 1px;
+            background: var(--accent-3);
+        }
+        .section-title {
+            font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+            font-size: clamp(1.9rem, 4.5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            max-width: 760px;
+        }
+
+        .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+        .tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 12px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            border-radius: 100px;
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            backdrop-filter: blur(10px);
+        }
+        .tag.dim { text-decoration: line-through; opacity: 0.5; }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .about-item {
+            padding: 28px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            backdrop-filter: blur(10px);
+            transition: all 0.35s var(--ease);
             position: relative;
             overflow: hidden;
         }
-        
-        .hero::before {
+        .about-item::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(67, 97, 238, 0.05) 0%, transparent 70%);
-            transform: rotate(30deg);
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-2), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
-        
-        .hero-content {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .hero-image {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .hero-image img {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 50%;
-            border: 5px solid white;
-            box-shadow: var(--shadow);
-        }
-        
-        .hero-text {
-            flex: 1.5;
-        }
-        
-        .greeting {
-            margin-bottom: 20px;
-        }
-        
-        .greeting.en {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-        
-        .greeting.cn {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        
-        .greeting.cn .prefix {
-            color: var(--gray);
-        }
-        
-        .greeting.cn .name {
-            color: var(--primary);
-            font-weight: 700;
-        }
-        
-        .greeting.cn .face {
-            color: var(--accent);
-            margin-left: 10px;
-        }
-        
-        .labels-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 15px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-            text-decoration: none;
-            color: var(--dark);
-        }
-        
-        .label:hover {
+        .about-item:hover {
+            border-color: var(--border-hover);
             transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         }
-        
-        .label i {
-            font-size: 1.2rem;
-            color: var(--primary);
-        }
-        
-        .label .title {
+        .about-item:hover::before { opacity: 1; }
+        .about-item h3 {
+            font-family: 'Space Grotesk', 'Noto Sans JP', sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+            display: flex; align-items: center; gap: 12px;
             font-weight: 600;
         }
-        
-        .label .content {
-            color: var(--gray);
-            margin-left: 5px;
+        .about-item h3 i {
+            width: 36px; height: 36px;
+            border-radius: 10px;
+            background: var(--gradient);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 0.9rem;
+            box-shadow: 0 4px 12px color-mix(in oklab, var(--accent-2) 30%, transparent);
+            flex-shrink: 0;
         }
-        
-        .label .link {
-            color: var(--accent);
-            font-weight: 500;
+        .about-item p {
+            color: var(--text-muted);
+            font-size: 0.94rem;
+            line-height: 1.75;
         }
-        
-        /* 内容区域 */
-        section {
-            padding: var(--section-padding);
-        }
-        
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 50px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title i {
-            margin-right: 10px;
-            color: var(--accent);
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-        
-        .tag {
-            display: inline-block;
-            background: var(--light-gray);
-            color: var(--gray);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin: 0 5px;
-        }
-        
-        .tag i {
-            margin-right: 5px;
-        }
-        
-        .content-section {
-            background: white;
-            border-radius: var(--card-radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 40px;
-        }
-        
-        .content-section p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            line-height: 1.8;
-        }
-        
-        .content-section a {
-            color: var(--primary);
+        .about-item p + p { margin-top: 12px; }
+        .about-item a {
+            color: var(--accent-3);
             text-decoration: none;
-            transition: var(--transition);
-            font-weight: 500;
+            border-bottom: 1px dashed color-mix(in oklab, var(--accent-3) 50%, transparent);
+            transition: color 0.2s ease, border-color 0.2s ease;
         }
-        
-        .content-section a:hover {
-            color: var(--secondary);
-            text-decoration: underline;
+        .about-item a:hover {
+            color: var(--accent-1);
+            border-bottom-color: var(--accent-1);
         }
-        
-        .content-section del {
-            color: var(--gray);
+        .about-item.full { grid-column: span 2; }
+        .quote {
+            margin-top: 18px;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, color-mix(in oklab, var(--accent-1) 12%, transparent), color-mix(in oklab, var(--accent-2) 12%, transparent));
+            border-left: 3px solid var(--accent-1);
+            border-radius: 8px;
+            color: var(--text);
+            font-style: italic;
+            font-size: 0.95rem;
         }
-        
-        /* 链接区域 */
+        .mug-list {
+            margin-top: 12px;
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Sheyang (社央) — dedicated love card */
+        .about-item.sheyang {
+            background:
+                radial-gradient(circle at 0% 0%, color-mix(in oklab, var(--accent-1) 22%, transparent), transparent 55%),
+                radial-gradient(circle at 100% 100%, color-mix(in oklab, var(--accent-2) 22%, transparent), transparent 55%),
+                var(--surface);
+            border-color: color-mix(in oklab, var(--accent-1) 30%, var(--border));
+        }
+        .about-item.sheyang::before {
+            background: linear-gradient(90deg, transparent, var(--accent-1), transparent);
+            opacity: 1;
+        }
+        .about-item.sheyang h3 i { background: linear-gradient(135deg, var(--accent-1), #ff8ab8); }
+        .sheyang-decor {
+            position: absolute;
+            right: -20px; bottom: -30px;
+            font-size: 11rem;
+            color: var(--accent-1);
+            opacity: 0.07;
+            pointer-events: none;
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+        .sheyang-quote {
+            font-size: 1.05rem !important;
+            font-style: italic;
+            color: var(--text) !important;
+            margin-bottom: 22px;
+        }
+        .sheyang-cta {
+            display: inline-flex; align-items: center; gap: 14px;
+            padding: 14px 18px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            text-decoration: none !important;
+            color: var(--text) !important;
+            border-bottom: 1px solid var(--border) !important;
+            transition: all 0.3s var(--ease);
+            backdrop-filter: blur(10px);
+        }
+        .sheyang-cta:hover {
+            border-color: var(--accent-1) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px -10px color-mix(in oklab, var(--accent-1) 40%, transparent);
+            color: var(--text) !important;
+        }
+        .sheyang-cta:hover .sheyang-cta-arrow { transform: translateX(4px); }
+        .sheyang-cta-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent-1), #ff8ab8);
+            display: flex; align-items: center; justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px color-mix(in oklab, var(--accent-1) 40%, transparent);
+            flex-shrink: 0;
+        }
+        .sheyang-cta-text { display: flex; flex-direction: column; gap: 2px; }
+        .sheyang-cta-label { font-weight: 600; font-size: 0.95rem; }
+        .sheyang-cta-handle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .sheyang-cta-arrow {
+            color: var(--accent-1);
+            transition: transform 0.3s var(--ease);
+            margin-left: 6px;
+        }
+
         .links-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 14px;
+            perspective: 1200px;
         }
-        
         .identity-card {
-            background: white;
-            border-radius: var(--card-radius);
-            padding: 25px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none !important;
+            position: relative;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 18px;
+            display: flex; align-items: center; gap: 14px;
+            text-decoration: none;
+            color: var(--text);
+            backdrop-filter: blur(10px);
+            transition: border-color 0.3s var(--ease), background 0.3s var(--ease), box-shadow 0.3s var(--ease);
+            transform-style: preserve-3d;
         }
-        
         .identity-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            border-color: var(--border-hover);
+            background: var(--surface-2);
+            box-shadow: 0 20px 40px -10px color-mix(in oklab, var(--accent-2) 35%, transparent);
         }
-        
+        .identity-card:hover .identity-icon {
+            transform: rotate(-6deg) scale(1.08);
+        }
         .identity-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
+            width: 46px; height: 46px;
+            border-radius: 12px;
+            background: var(--gradient);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.15rem;
             flex-shrink: 0;
-            text-decoration: none !important;
+            transition: transform 0.35s var(--ease);
+            box-shadow: 0 4px 14px color-mix(in oklab, var(--accent-2) 30%, transparent);
         }
-        
-        .identity-content {
-            flex: 1;
-        }
-        
+        .identity-content { flex: 1; min-width: 0; }
         .identity-content .where {
             font-weight: 600;
-            color: var(--dark);
+            font-size: 0.95rem;
             display: block;
-            margin-bottom: 5px;
-            text-decoration: none !important;
+            margin-bottom: 2px;
         }
-        
         .identity-content .link {
-            color: var(--accent);
-            font-weight: 500;
-            text-decoration: none !important;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-family: 'JetBrains Mono', monospace;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-        
-        /* 页脚 */
+        .arrow {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            transition: all 0.3s var(--ease);
+        }
+        .identity-card:hover .arrow {
+            color: var(--accent-3);
+            transform: translate(3px, -3px);
+        }
+
         footer {
-            background: var(--dark);
-            color: white;
-            padding: 60px 0 30px;
+            padding: 60px 0 32px;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
         }
-        
         .footer-content {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 16px;
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
         }
-        
         .hosting {
-            display: inline-block;
-            color: #adb5bd;
+            color: var(--text-muted);
+            font-size: 0.88rem;
             text-decoration: none;
-            margin-bottom: 30px;
-            transition: var(--transition);
+            transition: color 0.2s ease;
         }
-        
-        .hosting:hover {
-            color: white;
-        }
-        
-        .hosting i {
-            color: #e63946;
-            margin-right: 5px;
-        }
-        
-        .hosting .link {
-            color: var(--accent);
-            font-weight: 500;
-        }
-        
+        .hosting i { color: var(--accent-1); margin-right: 4px; }
+        .hosting .link { color: var(--accent-3); font-weight: 500; }
+        .hosting:hover { color: var(--text); }
         .copyright {
-            color: #6c757d;
-            font-size: 1rem;
+            color: var(--text-dim);
+            font-size: 0.82rem;
+            font-family: 'JetBrains Mono', monospace;
         }
-        
-        .beian {
-            color: #6c757d;
-            font-size: 0.9rem;
-            margin-top: 10px;
-        }
-        
         .beian a {
-            color: #6c757d;
+            color: var(--text-dim);
+            font-size: 0.78rem;
             text-decoration: none;
+            transition: color 0.2s ease;
         }
-        
-        .beian a:hover {
-            color: #adb5bd;
-            text-decoration: underline;
+        .beian a:hover { color: var(--text-muted); }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
         }
-        
-        /* 响应式设计 */
-        @media (max-width: 992px) {
-            .hero-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .section-title::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            
-            .labels-container {
-                justify-content: center;
-            }
-            
-            .greeting.en,
-            .greeting.cn {
-                text-align: center;
-            }
+        .reveal.in { opacity: 1; transform: translateY(0); }
+        .reveal-stagger > * {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
         }
-        
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero {
-                padding: 120px 0 60px;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .content-section {
-                padding: 20px;
-            }
+        .reveal-stagger.in > * { opacity: 1; transform: translateY(0); }
+        .reveal-stagger.in > *:nth-child(1) { transition-delay: 0.05s; }
+        .reveal-stagger.in > *:nth-child(2) { transition-delay: 0.10s; }
+        .reveal-stagger.in > *:nth-child(3) { transition-delay: 0.15s; }
+        .reveal-stagger.in > *:nth-child(4) { transition-delay: 0.20s; }
+        .reveal-stagger.in > *:nth-child(5) { transition-delay: 0.25s; }
+        .reveal-stagger.in > *:nth-child(6) { transition-delay: 0.30s; }
+
+        @media (max-width: 960px) {
+            .hero-content { grid-template-columns: 1fr; gap: 50px; text-align: center; }
+            .hero-avatar { margin: 0 auto; max-width: 240px; order: -1; }
+            .subtitle { margin-left: auto; margin-right: auto; }
+            .section-label { justify-content: center; }
+            .section-title { margin: 0 auto; }
+            .tag-row { justify-content: center; }
+            .bento { grid-template-columns: repeat(2, 1fr); }
+            .about-grid { grid-template-columns: 1fr; }
+            .about-item.full { grid-column: span 1; }
+            .nav-links a { display: none; }
         }
-        
-        @media (max-width: 576px) {
-            .hero-image img {
-                max-width: 200px;
-            }
-            
-            .greeting.en {
-                font-size: 2rem;
-            }
-            
-            .greeting.cn {
-                font-size: 1.6rem;
-            }
-            
-            .label {
-                width: 100%;
-            }
+
+        @media (max-width: 560px) {
+            .hero { padding: 130px 0 60px; }
+            .bento { grid-template-columns: 1fr; }
+            .bento-item.wide { grid-column: span 1; }
+            .about-item { padding: 22px; }
+            section { padding: 60px 0; }
+            .lang-pill button { padding: 5px 8px; min-width: 28px; font-size: 0.7rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, ::before, ::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
+    <div class="aurora">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
     <header>
         <div class="container">
             <nav class="navbar">
-                <a href="#" class="logo">
-                    <i class="fas fa-play-circle"></i>
-                    乐谷Happyvalley
+                <a href="#home" class="logo">
+                    <span class="logo-mark"><i class="fas fa-play"></i></span>
+                    <span>Happyvalley</span>
                 </a>
-                <div class="nav-links">
-                    <a href="#home">首页</a>
-                    <a href="#about">关于我</a>
-                    <a href="#links">社交链接</a>
-                    <a href="#games">游戏账号</a>
+                <div class="nav-right">
+                    <div class="nav-links">
+                        <a href="#about" data-i18n="nav.about">About</a>
+                        <a href="#links" data-i18n="nav.social">Social</a>
+                        <a href="#games" data-i18n="nav.games">Games</a>
+                    </div>
+                    <div class="lang-pill" role="group" aria-label="Language">
+                        <button data-lang="zh" aria-label="中文">中</button>
+                        <button data-lang="en" aria-label="English">EN</button>
+                        <button data-lang="ja" aria-label="日本語">日</button>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
                 </div>
             </nav>
         </div>
     </header>
 
-    <!-- 头部区域 -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-image">
-                    <img src="happyvalley-mc.png" alt="happyvalley-lmx">
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="eyebrow">
+                            <span class="pulse"></span>
+                            <span data-i18n="hero.status">Available for collaboration</span>
+                        </div>
+                        <h1 class="title" data-i18n="hero.title">
+                            Hi, I'm <span class="accent">乐谷</span>.<br>I shoot, fly &amp; build.
+                        </h1>
+                        <p class="subtitle">
+                            <span data-i18n="hero.greeting">Hey friends, this is Happyvalley</span> <span style="color:var(--accent-1)">(。・`ω´・)</span><br>
+                            <span data-i18n="hero.bio">Amateur videographer · FPV drone pilot · Minecraft server owner · Founder of the Rhythm Game Chinese Media Project</span>
+                        </p>
+
+                        <div class="bento">
+                            <a class="bento-item wide" href="http://happyvalley.video">
+                                <i class="fa fa-map-marker-alt"></i>
+                                <div>
+                                    <div class="key" data-i18n="bento.studio">Studio</div>
+                                    <div class="val" data-i18n="bento.studioVal">Happyvalley Video Studio</div>
+                                </div>
+                            </a>
+                            <div class="bento-item">
+                                <i class="fa fa-language"></i>
+                                <div>
+                                    <div class="key" data-i18n="bento.lang">Lang</div>
+                                    <div class="val">中 · 漢 · EN · 日</div>
+                                </div>
+                            </div>
+                            <div class="bento-item">
+                                <i class="fa fa-university"></i>
+                                <div>
+                                    <div class="key" data-i18n="bento.school">School</div>
+                                    <div class="val">GUET</div>
+                                </div>
+                            </div>
+                            <div class="bento-item">
+                                <i class="fa-solid fa-keyboard"></i>
+                                <div>
+                                    <div class="key" data-i18n="bento.editor">Editor</div>
+                                    <div class="val">VSCode · tabs</div>
+                                </div>
+                            </div>
+                            <div class="bento-item">
+                                <i class="fa-brands fa-edge"></i>
+                                <div>
+                                    <div class="key" data-i18n="bento.browser">Browser</div>
+                                    <div class="val">Edge</div>
+                                </div>
+                            </div>
+                            <div class="bento-item wide">
+                                <i class="fa-brands fa-windows"></i>
+                                <div>
+                                    <div class="key" data-i18n="bento.platforms">Platforms</div>
+                                    <div class="val">Win 11 · Ubuntu · macOS / iOS</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-avatar">
+                        <img src="happyvalley-mc.png" alt="happyvalley-lmx">
+                    </div>
                 </div>
-                <div class="hero-text">
-                    <h1 class="greeting en">
-                        Hi! It's Happyvalley here~
-                    </h1>
-                    <h1 class="greeting cn">
-                        <small class="prefix">各位小伙伴大家好，</small><span class="name no-wrap">这里是乐谷 <span class="face">(。・`ω´・)</span></span>
-                    </h1>
-                    
-                    <div class="labels-container">
-                        <a alt="home" class="label" href="http://happyvalley.video">
-                            <i aria-hidden="true" class="fa fa-map-marker"></i>
-                            <span class="title">欢乐谷视频工作室</span>
-                            <span class="link">//happyvalley.video</span>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-label" data-i18n="sec.about">01 — About</div>
+                    <h2 class="section-title" data-i18n="about.title">A corporate slave who never stopped <span class="accent">making things.</span></h2>
+                    <div class="tag-row">
+                        <span class="tag"><i class="fa fa-video"></i> <span data-i18n="tag.videographer">Videographer</span></span>
+                        <span class="tag"><i class="fa fa-helicopter"></i> <span data-i18n="tag.drone">Drone Pilot</span></span>
+                        <span class="tag"><i class="fa fa-server"></i> DevOps</span>
+                    </div>
+                </div>
+
+                <div class="about-grid reveal-stagger">
+                    <div class="about-item">
+                        <h3><i class="fa fa-video"></i> <span data-i18n="about.video.title">Videography</span></h3>
+                        <p data-i18n="about.video.p1">Amateur videographer with four years of experience (mostly video — that's why it's videographer, not photographer XD). Shoots dance covers and cosplay events, mostly Vocaloid / Project SEKAI related.</p>
+                        <p data-i18n="about.video.p2">Currently fascinated by spatial video and VR180 stereoscopic capture — more of that to come. Feel free to reach out via the <a href="#links">links below</a> if you'd like to collaborate.</p>
+                    </div>
+
+                    <div class="about-item">
+                        <h3><i class="fa fa-cubes"></i> Minecraft</h3>
+                        <p data-i18n="about.mc.p1">Ten-plus years of running Minecraft servers — currently operating <a href="https://bdcraft.cn">BlueDream · 梦之蓝 Community</a>.</p>
+                    </div>
+
+                    <div class="about-item">
+                        <h3><i class="fa fa-helicopter"></i> <span data-i18n="about.drone.title">Drone · FPV</span></h3>
+                        <p data-i18n="about.drone.p1">RC enthusiast in love with FPV — there's nothing like soaring freely through the sky. I share my drone footage on bilibili.</p>
+                    </div>
+
+                    <div class="about-item">
+                        <h3><i class="fa fa-music"></i> <span data-i18n="about.mug.title">Rhythm Games</span></h3>
+                        <p data-i18n="about.mug.p1">Dragged into rhythm games by <a href="https://kamito.cn/">Kamito</a> in 2017. Own an SDVX controller (though showing up since becoming a corporate slave is rare).</p>
+                        <p data-i18n="about.mug.p2">Founder of the "Rhythm Game Chinese Media Project" — currently running the <a href="https://wiki.arcaea.cn">Arcaea Chinese Wiki</a> and <a href="https://wiki.rotaeno.cn">Rotaeno Chinese Wiki</a>.</p>
+                        <p class="mug-list" data-i18n="about.mug.list">Currently into: Arcaea · PJSK · Rotaeno · SDVX · maimai · jubeat · CHUNITHM</p>
+                    </div>
+
+                    <div class="about-item full">
+                        <h3><i class="fa fa-film"></i> <span data-i18n="about.up.title">Content creator · 15 years and counting</span></h3>
+                        <p data-i18n="about.up.p1">15 years of making videos! From iPai to Youku/Tudou to today's bilibili and Douyin — I've seen a lot _(:3rz)_ Content ranges from rhythm games to drone footage to Minecraft, though lately it's mostly been dance-cover collabs ww.</p>
+                    </div>
+
+                    <div class="about-item full sheyang">
+                        <div class="sheyang-decor"><i class="fa-solid fa-heart"></i></div>
+                        <h3>
+                            <i class="fa-solid fa-heart"></i>
+                            <span data-i18n="about.sheyang.title">社央 — my angel</span>
+                        </h3>
+                        <p class="sheyang-quote" data-i18n="about.sheyang.quote">社央 is my angel! 社央 is my favorite! 社央 is the cutest in the world!</p>
+                        <a href="https://space.bilibili.com/26028122" class="sheyang-cta" target="_blank" rel="noopener">
+                            <span class="sheyang-cta-icon"><i class="fa-brands fa-bilibili"></i></span>
+                            <span class="sheyang-cta-text">
+                                <span class="sheyang-cta-label" data-i18n="about.sheyang.follow">Follow 社央 on bilibili</span>
+                                <span class="sheyang-cta-handle">space.bilibili.com/26028122</span>
+                            </span>
+                            <i class="fa fa-arrow-right sheyang-cta-arrow"></i>
                         </a>
-                        
-                        <div alt="languages" class="label">
-                            <i aria-hidden="true" class="fa fa-language"></i>
-                            <span class="title">LANG</span>
-                            <span class="content">汉语 / 漢語 / English</span>
-                        </div>
-                        
-                        <div alt="education" class="label">
-                            <i aria-hidden="true" class="fa fa-university"></i>
-                            <span class="title">College</span>
-                            <span class="content">GUET</span>
-                        </div>
-                        
-                        <div alt="browser" class="label">
-                            <i aria-hidden="true" class="fa-brands fa-edge"></i>
-                            <span class="content">Edge</span>
-                        </div>
-                        
-                        <div alt="editor" class="label">
-                            <i aria-hidden="true" class="fa-solid fa-keyboard"></i>
-                            <span class="content">VSCode</span>
-                        </div>
-                        
-                        <div alt="spaces or tabs" class="label">
-                            <i aria-hidden="true" class="fa fa-i-cursor"></i>
-                            <span class="content">tabs</span>
-                        </div>
-                        
-                        <div alt="platforms" class="label">
-                            <i aria-hidden="true" class="fa-brands fa-windows"></i>
-                            <span class="content">11</span>
-                            <i aria-hidden="true" class="fa-brands fa-linux"></i>
-                            <span class="content">Ubuntu</span>
-                            <i aria-hidden="true" class="fa-brands fa-apple"></i>
-                            <span class="content">iOS / MacOS</span>
-                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 关于我 -->
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title">
-                <i class="fa fa-chevron-right"></i> happyvalley's Info
-                <span class="no-wrap">
-                    <small class="tag"><i class="fa fa-tag"></i>Videographer</small>
-                    <small class="tag"><i class="fa fa-tag"></i>Drone Pilot</small>
-                    <small class="tag"><i class="fa fa-tag"></i>DevOps</small>
-                </span>
-            </h2>
-            
-            <div class="content-section">
-                <p>
-                    \\乐谷是一位在职社畜//<br />
-                    是一名业余摄像师，目前有四年的摄像经验<br />
-                    （因为主要是拍视频而不是照片 所以是摄像师而不是摄影师XD）<br />
-                    经常进行录舞、Cosplay拍摄相关的摄像~<br />
-                    （主 Vocaloid / 世界计划 相关）<br />
-                    目前比较感兴趣空间视频、VR180等立体摄影摄像！之后也会陆续上传一些相关作品~<br />
-                    如有需要可以通过<a href="#links">下方链接</a>联系我合作~
-                </p>
-                
-                <p>
-                    Minecraft 爱好者<br />
-                    乐谷也是一位有着十年以上MC开服经验的的服主<br />
-                    目前运营着 <a href="https://bdcraft.cn">BlueDream·梦之蓝社区</a> 
-                </p>
-                
-                <p>
-                    航模爱好者，喜欢穿越机，喜欢在蓝天自由翱翔的感觉<br />
-                    有在bilibili上分享自己的穿越机记录哦~<br />
-                </p>
-                
-                <p>
-                    自2017年起被 <a href="https://kamito.cn/">猫猫酥</a> 拉入了音游坑，自有SDVX手台，但自从成为社畜后不怎么出勤了（<br />
-                    正在推的移动端音游：韵律源点Arcaea / PJSK(啤酒烧烤真好玩) / 旋转音律Rotaeno(方向盘咕噜咕噜)<br />
-                    正在推的非移动端音游：SDVX / maimai / jubeat / CHUNITHM<br />
-                    当然其他的许多音乐游戏也有在玩<br />
-                    “音游中文媒体计划”创始人，目前旗下开设并运营有 <a href="https://wiki.arcaea.cn">Arcaea中文维基</a> 和 <a href="https://wiki.rotaeno.cn">Rotaeno中文维基 </a><br />
-                </p>
-                
-                <p>
-                    乐谷也是一位up主，平时会上传各种各样的视频<br />
-                    视频内容多种多样，包括但不限于音乐游戏、穿越机、我的世界相关的视频<br />
-                    最近基本都是录舞的联合投稿ww<br />
-                    做视频十五年了！从爱拍到优酷土豆到现在的bilibili、抖音，经历了太多_(:3rz)_<br />
-                </p>
-                
-                <p>
-                    社央就是我的天使！最喜欢社央了！社央是世界上最可爱的！<br />
-                </p>
+        <section id="links">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-label" data-i18n="sec.social">02 — Social</div>
+                    <h2 class="section-title" data-i18n="social.title">Find me <span class="accent">everywhere.</span></h2>
+                    <div class="tag-row">
+                        <span class="tag dim"><i class="fa fa-tag"></i> Youtuber</span>
+                        <span class="tag dim"><i class="fa fa-tag"></i> Photographer</span>
+                    </div>
+                </div>
+
+                <div class="links-grid reveal-stagger">
+                    <a href="https://github.com/happyvalley-lmx" class="identity-card">
+                        <div class="identity-icon"><i class="fa-brands fa-github"></i></div>
+                        <div class="identity-content">
+                            <span class="where">GitHub</span>
+                            <span class="link">@happyvalley-lmx</span>
+                        </div>
+                        <i class="arrow fa fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                    <a href="https://space.bilibili.com/8033176" class="identity-card">
+                        <div class="identity-icon"><i class="fa-brands fa-bilibili"></i></div>
+                        <div class="identity-content">
+                            <span class="where">bilibili</span>
+                            <span class="link">@happyvalley_lmx</span>
+                        </div>
+                        <i class="arrow fa fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                    <a href="https://www.douyin.com/user/MS4wLjABAAAAl_xXUqkQ81vAk0i2umScu38zWmcKgbQvoKkvj-RAES4" class="identity-card">
+                        <div class="identity-icon"><i class="fa-brands fa-tiktok"></i></div>
+                        <div class="identity-content">
+                            <span class="where" data-i18n="social.douyin">Douyin (TikTok CN)</span>
+                            <span class="link">@乐谷happyvalley</span>
+                        </div>
+                        <i class="arrow fa fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                    <a href="https://www.xiaohongshu.com/user/profile/61d5d94a0000000010009bd2" class="identity-card">
+                        <div class="identity-icon"><i class="fa-solid fa-book"></i></div>
+                        <div class="identity-content">
+                            <span class="where" data-i18n="social.xhs">RedNote (Xiaohongshu)</span>
+                            <span class="link">@AkariMai</span>
+                        </div>
+                        <i class="arrow fa fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                    <a href="http://weibo.com/happyvalleylmx" class="identity-card">
+                        <div class="identity-icon"><i class="fa-brands fa-weibo"></i></div>
+                        <div class="identity-content">
+                            <span class="where" data-i18n="social.weibo">Weibo</span>
+                            <span class="link">@happyvalley_lmx</span>
+                        </div>
+                        <i class="arrow fa fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                    <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1085636071&amp;site=qq&amp;menu=yes" class="identity-card">
+                        <div class="identity-icon"><i class="fa-brands fa-qq"></i></div>
+                        <div class="identity-content">
+                            <span class="where">QQ</span>
+                            <span class="link">1085636071</span>
+                        </div>
+                        <i class="arrow fa fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 社交链接 -->
-    <section id="links">
-        <div class="container">
-            <h2 class="section-title">
-                <i class="fa fa-chevron-right"></i> happyvalley's Link
-                <span class="no-wrap">
-                    <small class="tag no-wrap"><i class="fa fa-tag"></i><del>Youtuber</del></small>
-                    <small class="tag no-wrap"><i class="fa fa-tag"></i><del>Photographer</del></small>
-                </span>
-            </h2>
-            
-            <div class="links-grid">
-                <a href="https://github.com/happyvalley-lmx" class="identity-card">
-                    <div class="identity-icon">
-                        <i class="fa-brands fa-github"></i>
+        <section id="games">
+            <div class="container">
+                <div class="section-header reveal">
+                    <div class="section-label" data-i18n="sec.games">03 — Games</div>
+                    <h2 class="section-title" data-i18n="games.title">Game <span class="accent">accounts.</span></h2>
+                    <div class="tag-row">
+                        <span class="tag"><i class="fa fa-tag"></i> sandbox</span>
+                        <span class="tag"><i class="fa fa-tag"></i> FPS</span>
+                        <span class="tag"><i class="fa fa-tag"></i> MUG</span>
                     </div>
-                    <div class="identity-content">
-                        <span class="where">GitHub</span>
-                        <span class="link">@happyvalley-lmx</span>
-                    </div>
-                </a>
-                
-                <a href="https://www.douyin.com/user/MS4wLjABAAAAl_xXUqkQ81vAk0i2umScu38zWmcKgbQvoKkvj-RAES4" class="identity-card">
-                    <div class="identity-icon">
-                        <i class="fa-brands fa-tiktok"></i>
-                    </div>
-                    <div class="identity-content">
-                        <span class="where">抖音(TikTok CN)</span>
-                        <span class="link">@乐谷happyvalley</span>
-                    </div>
-                </a>
-                
-                <a href="https://space.bilibili.com/8033176" class="identity-card">
-                    <div class="identity-icon">
-                        <i class="fa-brands fa-bilibili"></i>
-                    </div>
-                    <div class="identity-content">
-                        <span class="where">bilibili</span>
-                        <span class="link">@happyvalley_lmx</span>
-                    </div>
-                </a>
-                
-                <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1085636071&amp;site=qq&amp;menu=yes" class="identity-card">
-                    <div class="identity-icon">
-                        <i class="fa-brands fa-qq"></i>
-                    </div>
-                    <div class="identity-content">
-                        <span class="where">QQ</span>
-                        <span class="link">1085636071</span>
-                    </div>
-                </a>
-                
-                <a href="https://www.xiaohongshu.com/user/profile/61d5d94a0000000010009bd2" class="identity-card">
-                    <div class="identity-icon">
-                        <i class="fa-solid fa-book"></i>
-                    </div>
-                    <div class="identity-content">
-                        <span class="where">小红书(RedNote)</span>
-                        <span class="link">@AkariMai</span>
-                    </div>
-                </a>
-                
-                <a href="http://weibo.com/happyvalleylmx" class="identity-card">
-                    <div class="identity-icon">
-                        <i class="fa-brands fa-weibo"></i>
-                    </div>
-                    <div class="identity-content">
-                        <span class="where">weibo</span>
-                        <span class="link">@happyvalley_lmx</span>
-                    </div>
-                </a>
+                </div>
+
+                <div class="links-grid reveal-stagger">
+                    <a href="https://profile.unipjsk.com/#/user/5306898878803979" class="identity-card">
+                        <div class="identity-icon"><i class="fa fa-music"></i></div>
+                        <div class="identity-content">
+                            <span class="where">Project SEKAI</span>
+                            <span class="link">AkariMai</span>
+                        </div>
+                        <i class="arrow fa fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                    <a href="http://steamcommunity.com/id/happyvalley/" class="identity-card">
+                        <div class="identity-icon"><i class="fa-brands fa-steam"></i></div>
+                        <div class="identity-content">
+                            <span class="where">Steam</span>
+                            <span class="link">乐谷happyvalley</span>
+                        </div>
+                        <i class="arrow fa fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                    <a href="#" class="identity-card">
+                        <div class="identity-icon"><i class="fa-solid fa-cubes"></i></div>
+                        <div class="identity-content">
+                            <span class="where">Minecraft</span>
+                            <span class="link">happyvalley_lmx</span>
+                        </div>
+                        <i class="arrow fa fa-arrow-up-right-from-square"></i>
+                    </a>
+
+                    <a href="https://vrchat.com/home/user/usr_5aebc3a0-256a-4457-86fe-d384541a788d" class="identity-card">
+                        <div class="identity-icon"><i class="fas fa-vr-cardboard"></i></div>
+                        <div class="identity-content">
+                            <span class="where">VRChat</span>
+                            <span class="link">樂谷happyvalley</span>
+                        </div>
+                        <i class="arrow fa fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- 游戏账号 -->
-    <section id="games">
-        <div class="container">
-            <h2 class="section-title">
-                <i class="fa fa-chevron-right"></i> happyvalley's Game Account
-                <span class="no-wrap">
-                    <small class="tag no-wrap"><i class="fa fa-tag"></i>sandbox</small>
-                    <small class="tag no-wrap"><i class="fa fa-tag"></i>FPS</small>
-                    <small class="tag no-wrap"><i class="fa fa-tag"></i>MUG</small>
-                </span>
-            </h2>
-            
-            <div class="links-grid">
-                <a href="https://profile.unipjsk.com/#/user/5306898878803979" class="identity-card">
-                    <div class="identity-icon">
-                        <i class="fa fa-music"></i>
-                    </div>
-                    <div class="identity-content">
-                        <span class="where">Project SEKAI</span>
-                        <span class="link">AkariMai</span>
-                    </div>
-                </a>
-                
-                <a href="http://steamcommunity.com/id/happyvalley/" class="identity-card">
-                    <div class="identity-icon">
-                        <i class="fa-brands fa-steam"></i>
-                    </div>
-                    <div class="identity-content">
-                        <span class="where">Steam</span>
-                        <span class="link">乐谷happyvalley</span>
-                    </div>
-                </a>
-                
-                <a href="#" class="identity-card">
-                    <div class="identity-icon">
-                        <i class="fa-solid fa-cubes"></i>
-                    </div>
-                    <div class="identity-content">
-                        <span class="where">Minecraft</span>
-                        <span class="link">happyvalley_lmx</span>
-                    </div>
-                </a>
-                
-                <a href="https://vrchat.com/home/user/usr_5aebc3a0-256a-4457-86fe-d384541a788d" class="identity-card">
-                    <div class="identity-icon">
-                        <i class="fas fa-vr-cardboard"></i>
-                    </div>
-                    <div class="identity-content">
-                        <span class="where">VRChat</span>
-                        <span class="link">樂谷happyvalley</span>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 页脚 -->
     <footer>
         <div class="container">
             <div class="footer-content">
                 <a class="hosting" href="https://github.com/amphineko/amphineko">
-                    <i class="fa fa-heart"></i> This is a refactoring of <span class="link">https://futa.moe/amphineko</span>, a biopage by Naoki Rinmous.
+                    <i class="fa fa-heart"></i> <span data-i18n="footer.hosting">A refactoring of <span class="link">https://futa.moe/amphineko</span>, a biopage by Naoki Rinmous.</span>
                 </a>
-                <div class="copyright">
-                    Copyright © 2017-2025 happyvalley.
-                </div>
+                <div class="copyright">© 2017–2025 happyvalley</div>
                 <div class="beian">
                     <a href="https://beian.miit.gov.cn/" target="_blank">桂ICP备20001846号-1</a>
                 </div>
@@ -763,37 +981,258 @@
     </footer>
 
     <script>
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // ============================================================
+        // i18n dictionary — zh / en / ja
+        // ============================================================
+        const i18n = {
+            zh: {
+                'nav.about': '关于',
+                'nav.social': '社交',
+                'nav.games': '游戏',
+                'hero.status': '正在接受合作邀请',
+                'hero.title': '你好，我是 <span class="accent">乐谷</span>。<br>拍摄、飞行、创造。',
+                'hero.greeting': '各位小伙伴大家好，这里是乐谷',
+                'hero.bio': '业余摄像师 · 穿越机航模玩家 · MC 服主 · 音游中文媒体计划创始人',
+                'bento.studio': '工作室',
+                'bento.studioVal': '欢乐谷视频工作室',
+                'bento.lang': '语言',
+                'bento.school': '学校',
+                'bento.editor': '编辑器',
+                'bento.browser': '浏览器',
+                'bento.platforms': '平台',
+                'sec.about': '01 — 关于',
+                'sec.social': '02 — 社交',
+                'sec.games': '03 — 游戏',
+                'about.title': '永远不停下创作的 <span class="accent">在职社畜。</span>',
+                'tag.videographer': '摄像师',
+                'tag.drone': '穿越机飞手',
+                'about.video.title': '摄像 · Videography',
+                'about.video.p1': '四年摄像经验的业余摄像师（因为主要是拍视频而不是照片，所以是摄像师而不是摄影师 XD）。经常进行录舞、Cosplay 拍摄相关的摄像，主 Vocaloid / 世界计划相关。',
+                'about.video.p2': '目前对空间视频、VR180 等立体摄影摄像感兴趣，之后也会陆续上传一些相关作品。如有需要可以通过<a href="#links">下方链接</a>联系我合作。',
+                'about.mc.p1': '十年以上 MC 开服经验的服主，目前运营着 <a href="https://bdcraft.cn">BlueDream · 梦之蓝社区</a>。',
+                'about.drone.title': '穿越机 · Drone',
+                'about.drone.p1': '航模爱好者，喜欢穿越机，喜欢在蓝天自由翱翔的感觉。有在 bilibili 上分享自己的穿越机记录哦~',
+                'about.mug.title': '音游 · Rhythm Games',
+                'about.mug.p1': '自 2017 年起被 <a href="https://kamito.cn/">猫猫酥</a> 拉入了音游坑，自有 SDVX 手台（但自从成为社畜后不怎么出勤了）。',
+                'about.mug.p2': '"音游中文媒体计划"创始人，目前旗下开设并运营有 <a href="https://wiki.arcaea.cn">Arcaea 中文维基</a> 和 <a href="https://wiki.rotaeno.cn">Rotaeno 中文维基</a>。',
+                'about.mug.list': '推：Arcaea · PJSK · Rotaeno · SDVX · maimai · jubeat · CHUNITHM',
+                'about.up.title': 'Up 主 · 十五年',
+                'about.up.p1': '做视频十五年了！从爱拍到优酷土豆到现在的 bilibili、抖音，经历了太多 _(:3rz)_ 视频内容多种多样，包括但不限于音乐游戏、穿越机、我的世界相关的视频，最近基本都是录舞的联合投稿 ww。',
+                'about.sheyang.title': '社央 — 我的天使',
+                'about.sheyang.quote': '社央就是我的天使！最喜欢社央了！社央是世界上最可爱的！',
+                'about.sheyang.follow': '在 bilibili 上关注社央',
+                'social.title': '在 <span class="accent">各处</span> 都能找到我。',
+                'social.douyin': '抖音',
+                'social.xhs': '小红书',
+                'social.weibo': '微博',
+                'games.title': '游戏 <span class="accent">账号。</span>',
+                'footer.hosting': '基于 Naoki Rinmous 的 <span class="link">https://futa.moe/amphineko</span> 重构。',
+            },
+            en: {
+                'nav.about': 'About',
+                'nav.social': 'Social',
+                'nav.games': 'Games',
+                'hero.status': 'Available for collaboration',
+                'hero.title': "Hi, I'm <span class=\"accent\">Happyvalley</span>.<br>I shoot, fly &amp; build.",
+                'hero.greeting': "Hey friends, this is Happyvalley here",
+                'hero.bio': 'Amateur videographer · FPV drone pilot · Minecraft server owner · Founder of the Rhythm Game Chinese Media Project',
+                'bento.studio': 'Studio',
+                'bento.studioVal': 'Happyvalley Video Studio',
+                'bento.lang': 'Lang',
+                'bento.school': 'School',
+                'bento.editor': 'Editor',
+                'bento.browser': 'Browser',
+                'bento.platforms': 'Platforms',
+                'sec.about': '01 — About',
+                'sec.social': '02 — Social',
+                'sec.games': '03 — Games',
+                'about.title': 'A corporate slave who never stopped <span class="accent">making things.</span>',
+                'tag.videographer': 'Videographer',
+                'tag.drone': 'Drone Pilot',
+                'about.video.title': 'Videography',
+                'about.video.p1': "Amateur videographer with four years of experience (mostly video — that's why it's videographer, not photographer XD). Shoots dance covers and cosplay events, mostly Vocaloid / Project SEKAI related.",
+                'about.video.p2': "Currently fascinated by spatial video and VR180 stereoscopic capture — more of that to come. Feel free to reach out via the <a href=\"#links\">links below</a> if you'd like to collaborate.",
+                'about.mc.p1': 'Ten-plus years of running Minecraft servers — currently operating <a href="https://bdcraft.cn">BlueDream · 梦之蓝 Community</a>.',
+                'about.drone.title': 'Drone · FPV',
+                'about.drone.p1': "RC enthusiast in love with FPV — there's nothing like soaring freely through the sky. I share drone footage on bilibili.",
+                'about.mug.title': 'Rhythm Games',
+                'about.mug.p1': 'Dragged into rhythm games by <a href="https://kamito.cn/">Kamito</a> in 2017. Own an SDVX controller (though showing up since becoming a corporate slave is rare).',
+                'about.mug.p2': 'Founder of the "Rhythm Game Chinese Media Project" — currently running the <a href="https://wiki.arcaea.cn">Arcaea Chinese Wiki</a> and <a href="https://wiki.rotaeno.cn">Rotaeno Chinese Wiki</a>.',
+                'about.mug.list': 'Currently into: Arcaea · PJSK · Rotaeno · SDVX · maimai · jubeat · CHUNITHM',
+                'about.up.title': 'Content creator · 15 years and counting',
+                'about.up.p1': "15 years making videos! From iPai to Youku/Tudou to today's bilibili and Douyin — I've seen a lot _(:3rz)_ Content ranges from rhythm games to drone footage to Minecraft, though lately it's mostly been dance-cover collabs ww.",
+                'about.sheyang.title': '社央 — my angel',
+                'about.sheyang.quote': '社央 is my angel! 社央 is my favorite! 社央 is the cutest in the world!',
+                'about.sheyang.follow': 'Follow 社央 on bilibili',
+                'social.title': 'Find me <span class="accent">everywhere.</span>',
+                'social.douyin': 'Douyin (TikTok CN)',
+                'social.xhs': 'RedNote (Xiaohongshu)',
+                'social.weibo': 'Weibo',
+                'games.title': 'Game <span class="accent">accounts.</span>',
+                'footer.hosting': 'A refactoring of <span class="link">https://futa.moe/amphineko</span>, a biopage by Naoki Rinmous.',
+            },
+            ja: {
+                'nav.about': 'プロフィール',
+                'nav.social': 'ソーシャル',
+                'nav.games': 'ゲーム',
+                'hero.status': 'コラボ受付中',
+                'hero.title': 'こんにちは、<span class="accent">楽谷</span>です。<br>撮って、飛ばして、作る。',
+                'hero.greeting': '皆さんこんにちは、楽谷です',
+                'hero.bio': 'アマチュア撮影者 · FPVドローンパイロット · Minecraftサーバー運営者 · 音ゲー中国語メディアプロジェクト創設者',
+                'bento.studio': 'スタジオ',
+                'bento.studioVal': 'ハッピーバレー映像スタジオ',
+                'bento.lang': '言語',
+                'bento.school': '大学',
+                'bento.editor': 'エディタ',
+                'bento.browser': 'ブラウザ',
+                'bento.platforms': 'プラットフォーム',
+                'sec.about': '01 — プロフィール',
+                'sec.social': '02 — ソーシャル',
+                'sec.games': '03 — ゲーム',
+                'about.title': 'ものづくりをやめない <span class="accent">社畜です。</span>',
+                'tag.videographer': '撮影者',
+                'tag.drone': 'ドローンパイロット',
+                'about.video.title': '映像撮影 · Videography',
+                'about.video.p1': '撮影歴4年のアマチュア撮影者（写真ではなく映像メインなので、フォトグラファーではなくビデオグラファーです XD）。ダンスカバーやコスプレ撮影が中心で、主にボカロ / プロセカ関連です。',
+                'about.video.p2': '最近は空間映像やVR180などの立体撮影に興味があり、関連作品も順次公開予定です。コラボのご相談は<a href="#links">下記リンク</a>からどうぞ。',
+                'about.mc.p1': 'MCサーバー運営歴10年以上のサーバー主。現在は <a href="https://bdcraft.cn">BlueDream · 梦之蓝コミュニティ</a> を運営中。',
+                'about.drone.title': 'ドローン · FPV',
+                'about.drone.p1': 'ラジコン好きでFPVドローンに夢中。大空を自由に飛ぶ感覚がたまりません。bilibiliでドローン映像を投稿しています〜',
+                'about.mug.title': '音ゲー · Rhythm Games',
+                'about.mug.p1': '2017年に <a href="https://kamito.cn/">猫猫酥</a> さんに音ゲーの沼に引きずり込まれて以来。SDVX筐体所有（社畜になってからほぼ稼働していませんが…）。',
+                'about.mug.p2': '「音ゲー中国語メディアプロジェクト」創設者。現在 <a href="https://wiki.arcaea.cn">Arcaea中国語Wiki</a> と <a href="https://wiki.rotaeno.cn">Rotaeno中国語Wiki</a> を運営中。',
+                'about.mug.list': 'プレイ中：Arcaea · プロセカ · Rotaeno · SDVX · maimai · jubeat · CHUNITHM',
+                'about.up.title': '動画投稿者 · 15年目',
+                'about.up.p1': '動画制作歴15年！愛拍から優酷・土豆、そして現在のbilibili・抖音まで、いろいろ経験してきました _(:3rz)_ 内容は音ゲー、ドローン、Minecraftなど様々ですが、最近はもっぱらダンスカバーの合作投稿 ww。',
+                'about.sheyang.title': '社央ちゃん — 僕の天使',
+                'about.sheyang.quote': '社央ちゃんは僕の天使！社央ちゃんが一番大好き！社央ちゃんは世界一かわいい！',
+                'about.sheyang.follow': 'bilibiliで社央ちゃんをフォロー',
+                'social.title': 'どこでも <span class="accent">見つけて。</span>',
+                'social.douyin': '抖音 / Douyin',
+                'social.xhs': '小紅書 / RedNote',
+                'social.weibo': '微博 / Weibo',
+                'games.title': 'ゲーム <span class="accent">アカウント。</span>',
+                'footer.hosting': 'Naoki Rinmous さんの <span class="link">https://futa.moe/amphineko</span> をリファクタリングしたものです。',
+            },
+        };
+
+        const langMeta = {
+            zh: { html: 'zh-CN', title: 'Happyvalley — 乐谷' },
+            en: { html: 'en',    title: 'Happyvalley — lmx' },
+            ja: { html: 'ja',    title: 'Happyvalley — 楽谷' },
+        };
+
+        // Pick initial language: stored > browser > en fallback
+        function detectLang() {
+            const stored = localStorage.getItem('lang');
+            if (stored && i18n[stored]) return stored;
+            const prefs = (navigator.languages || [navigator.language || 'en']).map(l => l.toLowerCase());
+            for (const p of prefs) {
+                if (p.startsWith('zh')) return 'zh';
+                if (p.startsWith('ja')) return 'ja';
+                if (p.startsWith('en')) return 'en';
+            }
+            return 'en';
+        }
+
+        function applyLang(lang) {
+            const dict = i18n[lang];
+            if (!dict) return;
+            document.documentElement.lang = langMeta[lang].html;
+            document.title = langMeta[lang].title;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (dict[key] !== undefined) el.innerHTML = dict[key];
+            });
+            document.querySelectorAll('.lang-pill button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+        }
+
+        const initialLang = detectLang();
+        applyLang(initialLang);
+
+        document.querySelectorAll('.lang-pill button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                localStorage.setItem('lang', lang);
+                applyLang(lang);
             });
         });
-        
-        // 导航栏滚动效果
+
+        // ============================================================
+        // Header scroll state
+        // ============================================================
+        const header = document.querySelector('header');
         window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+            header.classList.toggle('scrolled', window.scrollY > 20);
+        }, { passive: true });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const href = a.getAttribute('href');
+                if (href === '#' || href.length < 2) return;
+                const el = document.querySelector(href);
+                if (el) {
+                    e.preventDefault();
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
         });
-        
-        // 模拟头像加载
-        document.addEventListener('DOMContentLoaded', function() {
-            const img = document.querySelector('.hero-image img');
-            if (!img.complete) {
+
+        // Theme toggle (persisted)
+        const root = document.documentElement;
+        const toggle = document.getElementById('themeToggle');
+        const storedTheme = localStorage.getItem('theme') || 'dark';
+        applyTheme(storedTheme);
+        toggle.addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            localStorage.setItem('theme', next);
+        });
+        function applyTheme(t) {
+            root.setAttribute('data-theme', t);
+            toggle.querySelector('i').className = t === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Scroll reveal
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('in');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+
+        // Hero avatar fade-in
+        document.addEventListener('DOMContentLoaded', () => {
+            const img = document.querySelector('.hero-avatar img');
+            if (img && !img.complete) {
                 img.style.opacity = 0;
-                img.addEventListener('load', function() {
-                    this.style.transition = 'opacity 0.5s ease';
-                    this.style.opacity = 1;
+                img.addEventListener('load', () => {
+                    img.style.transition = 'opacity 0.6s ease';
+                    img.style.opacity = 1;
                 });
             }
         });
+
+        // Magnetic tilt on identity cards (desktop only, respects reduced motion)
+        const canTilt = matchMedia('(hover: hover) and (pointer: fine)').matches
+            && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (canTilt) {
+            document.querySelectorAll('.identity-card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const r = card.getBoundingClientRect();
+                    const x = (e.clientX - r.left - r.width / 2) / r.width;
+                    const y = (e.clientY - r.top - r.height / 2) / r.height;
+                    card.style.transform = `translateY(-4px) rotateX(${-y * 6}deg) rotateY(${x * 8}deg)`;
+                });
+                card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+            });
+        }
     </script>
 </body>
 </html>
